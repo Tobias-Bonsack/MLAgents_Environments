@@ -381,6 +381,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   resetTransform: {fileID: 4067431576377897159}
   manager: {fileID: 5544228168984811588}
+  throwerEnviManager: {fileID: 0}
   radiusX: 5
   radiusZ: 5
   startX: 0
@@ -1958,7 +1959,6 @@ GameObject:
   - component: {fileID: 5544228168789406541}
   - component: {fileID: 5544228168789406538}
   - component: {fileID: 5544228168789406539}
-  - component: {fileID: 5544228168789406542}
   m_Layer: 0
   m_Name: Ground
   m_TagString: Untagged
@@ -2310,7 +2310,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+  - {fileID: 2100000, guid: 513839a64bf96064b96141d071e4459f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2354,20 +2354,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
---- !u!114 &5544228168789406542
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5544228168789406536}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f77a2328f6ac94a40aa3b79568aba4d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  manager: {fileID: 5544228168984811588}
-  mRenderer: {fileID: 5544228168789406541}
 --- !u!1 &5544228168861193446
 GameObject:
   m_ObjectHideFlags: 0
@@ -3136,6 +3122,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   resetTransform: {fileID: 5544228169342246310}
   manager: {fileID: 5544228168984811588}
+  throwerEnviManager: {fileID: 0}
   radiusX: 4
   radiusZ: 4
   startX: 5
