@@ -15,6 +15,10 @@ namespace TTT
 
         [Header("Observations")]
         [SerializeField] FieldManager[] _fields;
+        [SerializeField] bool _isTurn;
+
+        [Header("Rewards")]
+        [SerializeField] float _onWrongTurn = -1f;
 
         public override void OnEpisodeBegin()
         {
@@ -75,6 +79,15 @@ namespace TTT
         public override void OnActionReceived(ActionBuffers actions)
         {
             //TODO create controller
+            ActionSegment<int> discreteActions = actions.DiscreteActions;
+            if (!_isTurn)
+            {
+                AddReward(_onWrongTurn);
+                return;
+            }
+            else if (discreteActions[0] == 9) return;
+
+            _fields[discreteActions[0]].ActivateField(_id);
         }
 
         public void AddExternalReward(float reward)
