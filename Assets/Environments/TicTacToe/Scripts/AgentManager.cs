@@ -4,6 +4,7 @@ using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace TTT
 {
@@ -22,24 +23,37 @@ namespace TTT
 
         public override void CollectObservations(VectorSensor sensor)
         {
-            //TODO collect observations
-
             foreach (FieldManager fieldManager in _fields)
             {
-                if (fieldManager._status == FieldManager.Status.FREE)
+                int value = -1;
+                switch (fieldManager._status)
                 {
-                    sensor.AddObservation(0);
+                    case FieldManager.Status.FREE:
+                        value = 0;
+                        break;
+                    case FieldManager.Status.CROSS:
+                        value = _id == FieldManager.Status.CROSS ? 1 : 2;
+                        break;
+                    case FieldManager.Status.TORUS:
+                        value = _id == FieldManager.Status.TORUS ? 1 : 2;
+                        break;
+                    default:
+                        Debug.LogWarning("No fieldstatus available!");
+                        break;
                 }
-                else
-                {
-                    int owner = _id == FieldManager.Status.CROSS ? 0 : 1;//TODO make it work
-                }
+                sensor.AddObservation(value);
             }
         }
 
         public override void Heuristic(in ActionBuffers actionsOut)
         {
             //TODO create heuristic
+            Mouse mouse = Mouse.current;
+            if (mouse != null && mouse.leftButton.isPressed)
+            {
+                Debug.Log("is clicked!");
+                Camera.main.ScreenPointToRay(mouse.position.ReadValue());
+            }
         }
 
         public override void OnActionReceived(ActionBuffers actions)
