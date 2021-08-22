@@ -47,13 +47,29 @@ namespace TTT
 
         public override void Heuristic(in ActionBuffers actionsOut)
         {
-            //TODO create heuristic
             Mouse mouse = Mouse.current;
             if (mouse != null && mouse.leftButton.isPressed)
             {
-                Debug.Log("is clicked!");
-                Camera.main.ScreenPointToRay(mouse.position.ReadValue());
+                Ray ray = Camera.main.ScreenPointToRay(mouse.position.ReadValue());
+                Debug.DrawLine(ray.origin, ray.GetPoint(20), Color.red, 1f);
+
+                RaycastHit hit;
+                if (Physics.Raycast(ray, out hit))
+                {
+                    FieldManager hittedFM;
+                    ActionSegment<int> discreteActions = actionsOut.DiscreteActions;
+                    if (hit.collider.gameObject.TryGetComponent<FieldManager>(out hittedFM))
+                    {
+                        discreteActions[0] = hittedFM._number;
+                    }
+                    else
+                    {
+                        discreteActions[0] = 9;
+                    }
+                }
             }
+
+
         }
 
         public override void OnActionReceived(ActionBuffers actions)
