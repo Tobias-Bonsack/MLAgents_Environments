@@ -8,14 +8,16 @@ namespace TTT
     public class EventManager : MonoBehaviour
     {
         #region events
-        public EventHandler<EventArgs> OnChooseField;
+        public EventHandler<EventArgs> _onEndTurn;
+        public EventHandler<EventArgs> _onEndGame;
         #endregion
 
         #region event args
-        public class OnChooseFieldEventArgs
-        {
-            public int _fieldNumber;
-        }
+        #endregion
+
+        #region triggers
+        public void TriggerOnEndTurn() => _onEndTurn?.Invoke(null, null);
+        public void TriggerOnEndGame() => _onEndGame?.Invoke(null, null);
         #endregion
     }
 }
