@@ -26,8 +26,6 @@ namespace Pong
 
         public override void CollectObservations(VectorSensor sensor)
         {
-            //TODO normalize as many as possible
-
             // Observations from itself
             sensor.AddObservation(transform.localPosition.z);
             // absolute distance to ball
