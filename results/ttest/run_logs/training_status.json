@@ -1,0 +1,48 @@
+{
+    "TicTacToe": {
+        "checkpoints": [
+            {
+                "steps": 99986,
+                "file_path": "results\\ttest\\TicTacToe\\TicTacToe-99986.onnx",
+                "reward": -5.496078431372549,
+                "creation_time": 1629738330.7793303,
+                "auxillary_file_paths": [
+                    "results\\ttest\\TicTacToe\\TicTacToe-99986.pt"
+                ]
+            },
+            {
+                "steps": 199989,
+                "file_path": "results\\ttest\\TicTacToe\\TicTacToe-199989.onnx",
+                "reward": -5.35126582278481,
+                "creation_time": 1629738593.9881485,
+                "auxillary_file_paths": [
+                    "results\\ttest\\TicTacToe\\TicTacToe-199989.pt"
+                ]
+            },
+            {
+                "steps": 226101,
+                "file_path": "results\\ttest\\TicTacToe\\TicTacToe-226101.onnx",
+                "reward": -7.75,
+                "creation_time": 1629738670.0590322,
+                "auxillary_file_paths": [
+                    "results\\ttest\\TicTacToe\\TicTacToe-226101.pt"
+                ]
+            }
+        ],
+        "elo": 1225.435085618117,
+        "final_checkpoint": {
+            "steps": 226101,
+            "file_path": "results\\ttest\\TicTacToe.onnx",
+            "reward": -7.75,
+            "creation_time": 1629738670.0590322,
+            "auxillary_file_paths": [
+                "results\\ttest\\TicTacToe\\TicTacToe-226101.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.27.0",
+        "torch_version": "1.9.0"
+    }
+}

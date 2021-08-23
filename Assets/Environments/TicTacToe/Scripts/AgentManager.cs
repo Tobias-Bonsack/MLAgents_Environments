@@ -83,12 +83,13 @@ namespace TTT
         public override void OnActionReceived(ActionBuffers actions)
         {
             ActionSegment<int> discreteActions = actions.DiscreteActions;
-            if (!_isTurn)
+            if (discreteActions[0] == 9) return;
+            else if (!_isTurn)
             {
                 AddReward(_onWrongTurn);
                 return;
             }
-            else if (discreteActions[0] == 9) return;
+
 
             if (_fields[discreteActions[0]].ActivateField(_id))
                 _manager.GetComponent<EventManager>().TriggerOnEndTurn();

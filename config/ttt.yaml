@@ -13,6 +13,9 @@ behaviors:
       extrinsic:
         gamma: 0.99
         strength: 1.0
+        network_settings:
+          hidden_units: 64
+          num_layers: 3
     keep_checkpoints: 10
     checkpoint_interval: 100000
     max_steps: 1000000
