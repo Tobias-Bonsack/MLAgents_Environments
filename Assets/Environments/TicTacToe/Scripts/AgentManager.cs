@@ -33,7 +33,11 @@ namespace TTT
         }
         public override void OnEpisodeBegin()
         {
-            _manager.GetComponent<EventManager>().TriggeronResetGame();
+            if (_isTurn)
+            {
+                Debug.Log("OnEpisodeBegin");
+                _manager.GetComponent<EventManager>().TriggeronResetGame();
+            }
         }
         public override void CollectObservations(VectorSensor sensor)
         {
@@ -100,7 +104,12 @@ namespace TTT
             else if (arg._winner == _id) AddReward(_onWin);
             else AddReward(_onLose);
 
-            EndEpisode();
+            if (_isTurn)
+            {
+                Debug.Log("Winner => " + arg._winner);
+                EndEpisode();
+            }
+
         }
     }
 }
