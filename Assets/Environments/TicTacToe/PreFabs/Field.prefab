@@ -47,6 +47,8 @@ MonoBehaviour:
   _preFabs:
   - {fileID: 896431714809519757, guid: 9ef3e772da0ddef459a645ea53c14802, type: 3}
   - {fileID: 1515754095495480992, guid: fb008207fe49ab44b8eb2f15a540337a, type: 3}
+  _distanceToSpawn: 0
+  _manager: {fileID: 0}
   _status: 0
   _number: 0
 --- !u!65 &1538947000142516805

@@ -9,15 +9,21 @@ namespace TTT
     {
         #region events
         public EventHandler<EventArgs> _onEndTurn;
-        public EventHandler<EventArgs> _onEndGame;
+        public EventHandler<OnEndGameEventArg> _onEndGame;
+        public EventHandler<EventArgs> _onResetGame;
         #endregion
 
         #region event args
+        public class OnEndGameEventArg
+        {
+            public FieldManager.Status _winner;
+        }
         #endregion
 
         #region triggers
         public void TriggerOnEndTurn() => _onEndTurn?.Invoke(null, null);
-        public void TriggerOnEndGame() => _onEndGame?.Invoke(null, null);
+        public void TriggerOnEndGame(OnEndGameEventArg arg) => _onEndGame?.Invoke(null, arg);
+        public void TriggeronResetGame() => _onResetGame?.Invoke(null, null);
         #endregion
     }
 }

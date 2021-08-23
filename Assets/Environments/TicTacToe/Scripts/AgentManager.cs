@@ -21,15 +21,19 @@ namespace TTT
         [SerializeField] bool _isTurn;
 
         [Header("Rewards")]
-        [SerializeField] float _onWrongTurn = -1f;
+        [SerializeField] float _onWrongTurn = -0.5f;
+        [SerializeField] float _onDraw = 0.5f;
+        [SerializeField] float _onWin = 1f;
+        [SerializeField] float _onLose = -1f;
 
         public override void Initialize()
         {
             _manager.GetComponent<EventManager>()._onEndTurn += ActionOnEndTurn;
+            _manager.GetComponent<EventManager>()._onEndGame += ActionOnEndGame;
         }
         public override void OnEpisodeBegin()
         {
-            //TODO create reset methods
+            _manager.GetComponent<EventManager>().TriggeronResetGame();
         }
         public override void CollectObservations(VectorSensor sensor)
         {
@@ -82,21 +86,21 @@ namespace TTT
             }
             else if (discreteActions[0] == 9) return;
 
-            _fields[discreteActions[0]].ActivateField(_id);
-        }
-        public void AddExternalReward(float reward)
-        {
-            Debug.Log("Reward: " + reward);
-            AddReward(reward);
-        }
-        public void EndExternalEpisode()
-        {
-            Debug.Log("End Episode");
-            EndEpisode();
+            if (_fields[discreteActions[0]].ActivateField(_id))
+                _manager.GetComponent<EventManager>().TriggerOnEndTurn();
         }
         private void ActionOnEndTurn(object sender, EventArgs args)
         {
             _isTurn = !_isTurn;
+        }
+
+        private void ActionOnEndGame(object sender, EventManager.OnEndGameEventArg arg)
+        {
+            if (arg._winner == FieldManager.Status.FREE) AddReward(_onDraw);
+            else if (arg._winner == _id) AddReward(_onWin);
+            else AddReward(_onLose);
+
+            EndEpisode();
         }
     }
 }
