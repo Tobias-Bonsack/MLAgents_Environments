@@ -56,7 +56,11 @@ namespace TTT
                     break;
                 }
             }
-            if (gameIsOver || winner != FieldManager.Status.FREE) _eventManager.TriggerOnEndGame(new EventManager.OnEndGameEventArg { _winner = winner });
+            if (gameIsOver || winner != FieldManager.Status.FREE)
+            {
+                Debug.Log("GameOver: " + winner);
+                _eventManager.TriggerOnEndGame(new EventManager.OnEndGameEventArg { _winner = winner });
+            }
         }
     }
 }

@@ -1,3 +1,4 @@
+using System.Linq;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -21,10 +22,13 @@ namespace TTT
         [SerializeField] bool _isTurn;
 
         [Header("Rewards")]
-        [SerializeField] float _onWrongTurn = -0.5f;
+        [SerializeField] float _onWrongField = -0.5f;
         [SerializeField] float _onDraw = 0.5f;
         [SerializeField] float _onWin = 1f;
         [SerializeField] float _onLose = -1f;
+
+        [Header("Ohters")]
+        [SerializeField] float _decisionDelay = 0.5f;
 
         public override void Initialize()
         {
@@ -36,7 +40,8 @@ namespace TTT
             if (_isTurn)
             {
                 Debug.Log("OnEpisodeBegin");
-                _manager.GetComponent<EventManager>().TriggeronResetGame();
+                _manager.GetComponent<EventManager>().TriggerOnResetGame();
+                RequestDecision();
             }
         }
         public override void CollectObservations(VectorSensor sensor)
@@ -61,8 +66,6 @@ namespace TTT
                 }
                 sensor.AddObservation(value);
             }
-
-            sensor.AddObservation(_isTurn);
         }
         public override void Heuristic(in ActionBuffers actionsOut)
         {
@@ -79,24 +82,30 @@ namespace TTT
             }
 
             discreteActions[0] = clickedField;
+            OnActionReceived(actionsOut);
         }
         public override void OnActionReceived(ActionBuffers actions)
         {
             ActionSegment<int> discreteActions = actions.DiscreteActions;
-            if (discreteActions[0] == 9) return;
-            else if (!_isTurn)
-            {
-                AddReward(_onWrongTurn);
-                return;
-            }
-
-
+            if (!Enumerable.Range(0, _fields.Length).Contains(discreteActions[0]) || !_isTurn) return;
             if (_fields[discreteActions[0]].ActivateField(_id))
                 _manager.GetComponent<EventManager>().TriggerOnEndTurn();
+            else
+            {
+                AddReward(_onWrongField);
+                Debug.Log("Choosen Field: " + discreteActions[0]);
+                StartCoroutine(DecisionDelay());
+            }
         }
         private void ActionOnEndTurn(object sender, EventArgs args)
         {
             _isTurn = !_isTurn;
+            StartCoroutine(DecisionDelay());
+        }
+        IEnumerator DecisionDelay()
+        {
+            yield return new WaitForSeconds(_decisionDelay);
+            if (_isTurn) RequestDecision();
         }
 
         private void ActionOnEndGame(object sender, EventManager.OnEndGameEventArg arg)
@@ -105,12 +114,7 @@ namespace TTT
             else if (arg._winner == _id) AddReward(_onWin);
             else AddReward(_onLose);
 
-            if (_isTurn)
-            {
-                Debug.Log("Winner => " + arg._winner);
-                EndEpisode();
-            }
-
+            EndEpisode();
         }
     }
 }

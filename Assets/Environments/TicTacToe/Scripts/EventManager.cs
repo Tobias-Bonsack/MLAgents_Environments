@@ -23,7 +23,7 @@ namespace TTT
         #region triggers
         public void TriggerOnEndTurn() => _onEndTurn?.Invoke(null, null);
         public void TriggerOnEndGame(OnEndGameEventArg arg) => _onEndGame?.Invoke(null, arg);
-        public void TriggeronResetGame() => _onResetGame?.Invoke(null, null);
+        public void TriggerOnResetGame() => _onResetGame?.Invoke(null, null);
         #endregion
     }
 }
